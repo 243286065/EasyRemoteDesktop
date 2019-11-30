@@ -67,12 +67,21 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>echo d | copy bin\* $(OutDir) /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>拷贝依赖的dll</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,29 +89,42 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>echo d | copy bin\* $(OutDir) /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>拷贝依赖的dll</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EasyRemoteDesktop.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ServerMainWindow.cpp" />
+    <ClCompile Include="src\CaptureScreenThread.cpp" />
+    <ClCompile Include="src\EasyRemoteDesktop.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ServerMainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="EasyRemoteDesktop.h" />
+    <QtMoc Include="src\EasyRemoteDesktop.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="EasyRemoteDesktop.ui" />
+    <QtUic Include="src\EasyRemoteDesktop.ui" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="EasyRemoteDesktop.qrc" />
+    <QtRcc Include="src\EasyRemoteDesktop.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ServerMainWindow.h" />
+    <QtMoc Include="src\ServerMainWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\CaptureScreenThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

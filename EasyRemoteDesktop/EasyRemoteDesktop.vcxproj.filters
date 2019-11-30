@@ -25,31 +25,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\EasyRemoteDesktop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EasyRemoteDesktop.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ServerMainWindow.cpp">
+    <ClCompile Include="src\ServerMainWindow.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CaptureScreenThread.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="EasyRemoteDesktop.h">
+    <QtMoc Include="src\EasyRemoteDesktop.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="ServerMainWindow.h">
+    <QtMoc Include="src\ServerMainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\CaptureScreenThread.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="EasyRemoteDesktop.ui">
+    <QtUic Include="src\EasyRemoteDesktop.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="EasyRemoteDesktop.qrc">
+    <QtRcc Include="src\EasyRemoteDesktop.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
