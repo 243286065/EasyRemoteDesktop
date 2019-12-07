@@ -1,4 +1,5 @@
 ﻿#include "ServerMainWindow.h"
+#include "glog/logging.h"
 
 ServerMainWindow::ServerMainWindow(Ui::EasyRemoteDesktopClass *ui) : m_pUi(ui)
 {
@@ -15,11 +16,16 @@ ServerMainWindow::ServerMainWindow(Ui::EasyRemoteDesktopClass *ui) : m_pUi(ui)
     //设置信号槽
     connect(ui->serverPreviewButton, SIGNAL(clicked()), this, SLOT(onPreviewBtnClicked()));
     connect(ui->serverSentButton, SIGNAL(clicked()), this, SLOT(onSentBtnClicked()));
+
+    connect(ui->serverFpsComboBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(onFpsSelectedChanged(const QString &)));
+
+    connect(&m_captureThread, &CaptureScreenThread::onGetNextScreenFrame, this, &ServerMainWindow::onGetNewFrame, Qt::QueuedConnection);
 }
 
 
 ServerMainWindow::~ServerMainWindow()
 {
+    m_captureThread.StopCaptureScreen();
 }
 
 
@@ -36,6 +42,7 @@ void ServerMainWindow::onPreviewBtnClicked()
     }
 
     m_bPreviewFlag = !m_bPreviewFlag;
+    CaptureStatusChange();
 }
 
 void ServerMainWindow::onSentBtnClicked()
@@ -51,4 +58,29 @@ void ServerMainWindow::onSentBtnClicked()
     }
 
     m_bSentFlag = !m_bSentFlag;
+    CaptureStatusChange();
+}
+
+void ServerMainWindow::onFpsSelectedChanged(const QString& fps)
+{
+    m_captureThread.SetFps(fps.toInt());
+}
+
+void ServerMainWindow::CaptureStatusChange() {
+    if ((m_bPreviewFlag || m_bSentFlag))
+    {
+        if (!m_captureThread.IsRunning()) {
+            m_captureThread.StartCaptureScreen(m_pUi->serverFpsComboBox->currentText().toInt());
+        }
+    }
+    else {
+        if (m_captureThread.IsRunning()) {
+            m_captureThread.StopCaptureScreen();
+        }
+    }
+}
+
+void ServerMainWindow::onGetNewFrame()
+{
+    m_pUi->serverPreviewWindow->UpdateFrame(m_captureThread.GetFrame());
 }
