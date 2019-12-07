@@ -110,6 +110,7 @@
     <ClCompile Include="src\EasyRemoteDesktop.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ServerMainWindow.cpp" />
+    <ClCompile Include="src\ShowPreviewWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\EasyRemoteDesktop.h" />
@@ -125,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\CaptureScreenThread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\ShowPreviewWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

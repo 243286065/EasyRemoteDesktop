@@ -81,8 +81,8 @@ QTabWidget::pane{border-width: 1px; border-style: solid; border-color: rgb(230, 
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>60</y>
+       <x>10</x>
+       <y>10</y>
        <width>131</width>
        <height>161</height>
       </rect>
@@ -184,12 +184,12 @@ QTabWidget::pane{border-width: 1px; border-style: solid; border-color: rgb(230, 
       </item>
      </layout>
     </widget>
-    <widget class="QOpenGLWidget" name="serverPreviewWindow">
+    <widget class="ShowPreviewWindow" name="serverPreviewWindow">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>150</x>
        <y>10</y>
-       <width>350</width>
+       <width>400</width>
        <height>250</height>
       </rect>
      </property>
@@ -208,6 +208,13 @@ QTabWidget::pane{border-width: 1px; border-style: solid; border-color: rgb(230, 
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ShowPreviewWindow</class>
+   <extends>QOpenGLWidget</extends>
+   <header>ShowPreviewWindow.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="EasyRemoteDesktop.qrc"/>
  </resources>
