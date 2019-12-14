@@ -4,6 +4,9 @@
 #include "EasyScreenCapturer/EasyScreenCapturer.h"
 #include "EasyScreenCapturer/CaptureStatusCode.h"
 
+#include "Utils.h"
+#include "MetricsClient.h"
+
 #include <thread>
 
 #pragma comment(lib, "EasyScreenCapture.lib")
@@ -54,6 +57,7 @@ void CaptureScreenThread::DoCaptureScreen()
 {
     while (m_bRunning)
     {
+        int64_t timestamp = GetTimestampMs();
         std::shared_ptr<media::CaptureBmpData> frame = std::make_shared<media::CaptureBmpData>();
         auto res = media::EasyScreenCapturer::GetInstance()->CaptureFullScreen(*frame);
 
@@ -77,7 +81,16 @@ void CaptureScreenThread::DoCaptureScreen()
             }
         }
         
-        std::this_thread::sleep_for(std::chrono::milliseconds(m_sampleInterval));
+        MetricsClientSingleton::GetInstance()->OnCaptureScreen();
+        // 调整截屏间隔，尽量满足帧率设置
+        int spent = GetTimestampMs() - timestamp;
+        int interval = m_sampleInterval;
+        if (spent > 0 && spent < m_sampleInterval)
+        {
+            interval = (int)(m_sampleInterval - spent);
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(interval));
     }
 }
 
