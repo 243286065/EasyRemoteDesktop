@@ -82,5 +82,8 @@ void ServerMainWindow::CaptureStatusChange() {
 
 void ServerMainWindow::onGetNewFrame()
 {
-    m_pUi->serverPreviewWindow->UpdateFrame(m_captureThread.GetFrame());
+    //更新预览窗口
+    if (m_bPreviewFlag) {
+        m_pUi->serverPreviewWindow->UpdateFrame(m_captureThread.GetFrame());
+    }
 }
