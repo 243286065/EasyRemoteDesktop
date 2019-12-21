@@ -30,9 +30,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
     <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
@@ -67,7 +69,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;include/yuv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -89,7 +91,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;include/yuv;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLOG_NO_ABBREVIATED_SEVERITIES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -108,6 +110,7 @@
   <ItemGroup>
     <ClCompile Include="src\CaptureScreenThread.cpp" />
     <ClCompile Include="src\EasyRemoteDesktop.cpp" />
+    <ClCompile Include="src\H264Encoder.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MetricsClient.cpp" />
     <ClCompile Include="src\ServerMainWindow.cpp" />
@@ -133,7 +136,38 @@
     <QtMoc Include="src\ShowPreviewWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\EasyScreenCapturer\CaptureStatusCode.h" />
+    <ClInclude Include="include\EasyScreenCapturer\EasyScreenCapturer.h" />
+    <ClInclude Include="include\gflags\gflags.h" />
+    <ClInclude Include="include\gflags\gflags_completions.h" />
+    <ClInclude Include="include\gflags\gflags_declare.h" />
+    <ClInclude Include="include\glog\logging.h" />
+    <ClInclude Include="include\glog\log_severity.h" />
+    <ClInclude Include="include\glog\raw_logging.h" />
+    <ClInclude Include="include\glog\stl_logging.h" />
+    <ClInclude Include="include\glog\vlog_is_on.h" />
+    <ClInclude Include="include\libyuv\libyuv.h" />
+    <ClInclude Include="include\libyuv\libyuv\basic_types.h" />
+    <ClInclude Include="include\libyuv\libyuv\compare.h" />
+    <ClInclude Include="include\libyuv\libyuv\convert.h" />
+    <ClInclude Include="include\libyuv\libyuv\convert_argb.h" />
+    <ClInclude Include="include\libyuv\libyuv\convert_from.h" />
+    <ClInclude Include="include\libyuv\libyuv\convert_from_argb.h" />
+    <ClInclude Include="include\libyuv\libyuv\cpu_id.h" />
+    <ClInclude Include="include\libyuv\libyuv\mjpeg_decoder.h" />
+    <ClInclude Include="include\libyuv\libyuv\planar_functions.h" />
+    <ClInclude Include="include\libyuv\libyuv\rotate.h" />
+    <ClInclude Include="include\libyuv\libyuv\rotate_argb.h" />
+    <ClInclude Include="include\libyuv\libyuv\row.h" />
+    <ClInclude Include="include\libyuv\libyuv\scale.h" />
+    <ClInclude Include="include\libyuv\libyuv\scale_argb.h" />
+    <ClInclude Include="include\libyuv\libyuv\scale_row.h" />
+    <ClInclude Include="include\libyuv\libyuv\version.h" />
+    <ClInclude Include="include\libyuv\libyuv\video_common.h" />
+    <ClInclude Include="include\x264\x264.h" />
+    <ClInclude Include="include\x264\x264_config.h" />
     <ClInclude Include="src\EasySingleton.h" />
+    <ClInclude Include="src\H264Encoder.h" />
     <ClInclude Include="src\MetricsClient.h" />
     <ClInclude Include="src\Utils.h" />
   </ItemGroup>
