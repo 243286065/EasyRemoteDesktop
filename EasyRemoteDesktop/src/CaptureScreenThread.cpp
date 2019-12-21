@@ -6,6 +6,7 @@
 
 #include "Utils.h"
 #include "MetricsClient.h"
+#include "H264Encoder.h"
 
 #include <thread>
 
@@ -13,6 +14,7 @@
 
 CaptureScreenThread::CaptureScreenThread()
 {
+    H264EncoderSingleton::GetInstance()->OpenEncoder();
 }
 
 
@@ -21,6 +23,8 @@ CaptureScreenThread::~CaptureScreenThread()
     if (m_thread && m_thread->joinable()) {
         m_thread->join();
     }
+
+    H264EncoderSingleton::GetInstance()->CloseEncoder();
 }
 
 
@@ -73,15 +77,22 @@ void CaptureScreenThread::DoCaptureScreen()
             }
             else if (res == media::StatusCode::CAPTURE_D3D_FRAME_NOCHANGE) {
                 media::EasyScreenCapturer::GetInstance()->FreeCaptureBmpData(*frame);
-                //m_pLastFrame = frame;
                 emit onGetNextScreenFrame();
             }
             else {
                 LOG(ERROR) << "Capture screen failed: " << res;
             }
+
+            // H264编码
+            if (m_pLastFrame)
+            {
+                H264EncoderSingleton::GetInstance()->Encode(m_pLastFrame->m_pixels, NULL, m_pLastFrame->m_headerInfo.biWidth, abs(m_pLastFrame->m_headerInfo.biHeight));
+            }
         }
         
+        // 帧率统计
         MetricsClientSingleton::GetInstance()->OnCaptureScreen();
+
         // 调整截屏间隔，尽量满足帧率设置
         int spent = GetTimestampMs() - timestamp;
         int interval = m_sampleInterval;
