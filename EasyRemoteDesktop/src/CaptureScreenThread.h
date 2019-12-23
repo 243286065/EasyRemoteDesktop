@@ -35,6 +35,7 @@ private:
 
     std::atomic_bool m_bRunning = false;
     int m_sampleInterval = 1000/ DEFAULT_CAPTURE_FPS;
+    size_t m_fps = DEFAULT_CAPTURE_FPS;
     std::mutex m_mutex;
     std::unique_ptr<std::thread> m_thread;
 

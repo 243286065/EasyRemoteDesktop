@@ -172,12 +172,12 @@ QTabWidget::pane{border-width: 1px; border-style: solid; border-color: rgb(230, 
         </item>
         <item>
          <property name="text">
-          <string>20</string>
+          <string>18</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>25</string>
+          <string>20</string>
          </property>
         </item>
        </widget>

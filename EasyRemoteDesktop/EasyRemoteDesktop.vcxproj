@@ -79,7 +79,8 @@
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo d | copy bin\* $(OutDir) /y</Command>
+      <Command>echo d | copy dll\* $(OutDir) /y
+echo d | copy dll_d\* $(OutDir) /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>拷贝依赖的dll</Message>
@@ -101,7 +102,7 @@
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo d | copy bin\* $(OutDir) /y</Command>
+      <Command>echo d | copy dll\* $(OutDir) /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>拷贝依赖的dll</Message>
@@ -170,6 +171,9 @@
     <ClInclude Include="src\H264Encoder.h" />
     <ClInclude Include="src\MetricsClient.h" />
     <ClInclude Include="src\Utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\desktop.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

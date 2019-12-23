@@ -51,10 +51,10 @@ void CaptureScreenThread::StopCaptureScreen()
 }
 
 void CaptureScreenThread::SetFps(const size_t fps) {
-    size_t realFps = (fps == 0) ? DEFAULT_CAPTURE_FPS : fps;
-    //抓屏间隔
     std::lock_guard<std::mutex> lock(m_mutex);
-    m_sampleInterval = 1000 / realFps;
+    m_fps = (fps == 0) ? DEFAULT_CAPTURE_FPS : fps;
+    //抓屏间隔
+    m_sampleInterval = 1000 / m_fps;
 }
 
 void CaptureScreenThread::DoCaptureScreen()
@@ -69,14 +69,10 @@ void CaptureScreenThread::DoCaptureScreen()
             std::lock_guard<std::mutex> lock(m_mutex);
             if (res == media::StatusCode::CAPTURE_OK)
             {
-                if (m_pLastFrame) {
-                    media::EasyScreenCapturer::GetInstance()->FreeCaptureBmpData(*m_pLastFrame);
-                }
                 m_pLastFrame = frame;
                 emit onGetNextScreenFrame();
             }
             else if (res == media::StatusCode::CAPTURE_D3D_FRAME_NOCHANGE) {
-                media::EasyScreenCapturer::GetInstance()->FreeCaptureBmpData(*frame);
                 emit onGetNextScreenFrame();
             }
             else {
@@ -86,7 +82,7 @@ void CaptureScreenThread::DoCaptureScreen()
             // H264编码
             if (m_pLastFrame)
             {
-                H264EncoderSingleton::GetInstance()->Encode(m_pLastFrame->m_pixels, NULL, m_pLastFrame->m_headerInfo.biWidth, abs(m_pLastFrame->m_headerInfo.biHeight));
+                H264EncoderSingleton::GetInstance()->Encode(m_pLastFrame, m_fps);
             }
         }
         
@@ -107,15 +103,6 @@ void CaptureScreenThread::DoCaptureScreen()
 
 std::shared_ptr<media::CaptureBmpData> CaptureScreenThread::GetFrame()
 {
-    // 拷贝一个副本出来
     std::lock_guard<std::mutex> lock(m_mutex);
-    if (!m_pLastFrame) return m_pLastFrame;
-
-    std::shared_ptr<media::CaptureBmpData> frame = std::make_shared<media::CaptureBmpData>();
-    frame->m_free = false;
-    frame->m_headerInfo = m_pLastFrame->m_headerInfo;
-    frame->m_pixels = (uint8_t*)malloc(m_pLastFrame->m_headerInfo.biSizeImage);
-    memcpy(frame->m_pixels, m_pLastFrame->m_pixels, m_pLastFrame->m_headerInfo.biSizeImage);
-
-    return frame;
+    return m_pLastFrame;
 }

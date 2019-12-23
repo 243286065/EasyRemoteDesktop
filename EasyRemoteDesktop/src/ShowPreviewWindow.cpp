@@ -35,7 +35,7 @@ void ShowPreviewWindow::paintEvent(QPaintEvent *event)
     if (m_pFrame) {
         QPainter painter;
         painter.begin(this);
-        QImage img((const uchar *)m_pFrame->m_pixels, (int)m_pFrame->m_headerInfo.biWidth, -(int)m_pFrame->m_headerInfo.biHeight, QImage::Format::Format_ARGB32);
+        QImage img((const uchar *)m_pFrame->m_pixels.get(), (int)m_pFrame->m_headerInfo.biWidth, -(int)m_pFrame->m_headerInfo.biHeight, QImage::Format::Format_ARGB32);
         QImage newImg = img.scaled(width(), height());
         painter.drawImage(QPoint(0, 0), newImg);
         painter.end();
@@ -68,11 +68,6 @@ void ShowPreviewWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 void ShowPreviewWindow::UpdateFrame(std::shared_ptr<media::CaptureBmpData> frame)
 {
-    if(m_pFrame){
-        //media::EasyScreenCapturer::GetInstance()->FreeCaptureBmpData(*m_pFrame);
-        free(m_pFrame->m_pixels);
-    }
-
     m_pFrame = frame;
     update();
 }

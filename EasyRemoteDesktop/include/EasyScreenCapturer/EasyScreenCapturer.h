@@ -4,6 +4,7 @@
 #include "CaptureStatusCode.h"
 
 #include <memory>
+#include <cstring>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -67,11 +68,25 @@ biSizeImage=biWidth’ × biHeight
 };
 #endif
 
-struct CaptureBmpData
+struct EXPORT CaptureBmpData
 {
-	uint8_t *m_pixels;
-	bool m_free = true;
+	std::shared_ptr<uint8_t> m_pixels = nullptr;
 	BITMAPINFOHEADER m_headerInfo;
+    size_t m_dataLen;
+
+    void malloc(const size_t len)
+    {
+        m_dataLen = len + 1;
+        m_pixels = std::shared_ptr<uint8_t>(new uint8_t[m_dataLen], std::default_delete<uint8_t[]>());
+        MemsetZero();
+    }
+
+    void MemsetZero()
+    {
+        if (m_pixels) {
+            memset(m_pixels.get(), 0, m_dataLen);
+        }
+    }
 };
 
 struct RectPos
@@ -96,8 +111,6 @@ public:
 	//截图,保存在内存中
 	virtual StatusCode CaptureScreen(CaptureBmpData& bmp, uint startX, uint startY, uint width, uint height) = 0;
 	virtual StatusCode CaptureFullScreen(CaptureBmpData& bmp) = 0;
-
-	virtual void FreeCaptureBmpData(CaptureBmpData& bmp);
 
 	static std::shared_ptr<EasyScreenCapturer> GetInstance();
 
