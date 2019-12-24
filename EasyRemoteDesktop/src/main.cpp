@@ -10,9 +10,9 @@
 int main(int argc, char *argv[])
 {
     google::InitGoogleLogging(argv[0]);
-    google::SetLogDestination(google::GLOG_INFO, "log_");
-    google::SetLogSymlink(google::GLOG_INFO, APP_NAME);
-    //FLAGS_alsologtostderr = true;
+    google::SetLogDestination(google::GLOG_INFO, APP_NAME);
+    //google::SetLogSymlink(google::GLOG_INFO, APP_NAME);
+    FLAGS_alsologtostderr = true;
     QApplication a(argc, argv);
     EasyRemoteDesktop w;
     w.show();

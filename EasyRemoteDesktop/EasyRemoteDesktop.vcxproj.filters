@@ -49,6 +49,12 @@
     <ClCompile Include="src\H264Encoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\network\TcpServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\network\TcpClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\EasyRemoteDesktop.h">
@@ -175,6 +181,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\x264\x264_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\TcpServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\network\TcpClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -76,7 +76,7 @@ struct EXPORT CaptureBmpData
 
     void malloc(const size_t len)
     {
-        m_dataLen = len + 1;
+        m_dataLen = len;
         m_pixels = std::shared_ptr<uint8_t>(new uint8_t[m_dataLen], std::default_delete<uint8_t[]>());
         MemsetZero();
     }

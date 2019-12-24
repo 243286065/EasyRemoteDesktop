@@ -64,11 +64,12 @@ void H264Encoder::SetFps(const int fps)
     x264_param_t param;
     if (m_x264Encoder)
     {
-        //更新编码器参数
+        //更新编码器参数, 2s一个关键帧
         m_fps = fps;
         x264_encoder_parameters(m_x264Encoder, &param);
         param.i_fps_num = fps;
         param.i_fps_den = 1;
+        param.i_keyint_max = fps * 2;
 
         //重新打开编码器
         //x264_encoder_close(m_x264Encoder);
@@ -253,7 +254,7 @@ void H264Encoder::DoEncode()
             if (perCost > expectCost - 5)
             {
                 // 应适当减小码率
-                auto bitrate = m_maxBandWidthBps > 256 ? max(m_maxBandWidthBps * 0.5, 128) : max(m_maxBandWidthBps * 0.75, 64);
+                auto bitrate = m_maxBandWidthBps > 256 ? max(m_maxBandWidthBps * 0.5, 128) : max(m_maxBandWidthBps * 0.75, 128);
                 SetMaxBandWidth(bitrate);
                 LOG(INFO) << "Reduce bitrate in x264encoder: " << m_maxBandWidthBps << "bps";
             }

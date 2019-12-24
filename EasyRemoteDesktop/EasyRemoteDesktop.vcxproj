@@ -79,8 +79,7 @@
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>echo d | copy dll\* $(OutDir) /y
-echo d | copy dll_d\* $(OutDir) /y</Command>
+      <Command>echo d | copy dll\* $(OutDir) /y</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>拷贝依赖的dll</Message>
@@ -117,6 +116,8 @@ echo d | copy dll_d\* $(OutDir) /y</Command>
     <ClCompile Include="src\ServerMainWindow.cpp" />
     <ClCompile Include="src\ShowPreviewWindow.cpp" />
     <ClCompile Include="src\Utils.cpp" />
+    <ClCompile Include="src\network\TcpServer.cpp" />
+    <ClCompile Include="src\network\TcpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\EasyRemoteDesktop.h" />
@@ -171,6 +172,8 @@ echo d | copy dll_d\* $(OutDir) /y</Command>
     <ClInclude Include="src\H264Encoder.h" />
     <ClInclude Include="src\MetricsClient.h" />
     <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\network\TcpServer.h" />
+    <ClInclude Include="src\network\TcpClient.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\desktop.ico" />

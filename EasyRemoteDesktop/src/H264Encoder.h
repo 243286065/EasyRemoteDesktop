@@ -32,8 +32,8 @@ private:
     void SetFps(const int fps);
 
     int m_maxBandWidthBps = kMaxBandWitdhBps / 2;  //最大带宽
-    int m_frameWidth = 1280;     //默认720p
-    int m_frameHeight = 720;
+    int m_frameWidth = 640;     //默认480p
+    int m_frameHeight = 480;
     int m_imageWidth = 0;
     int m_imageHeight = 0;
     std::mutex m_mutex;         //编码器同步锁
